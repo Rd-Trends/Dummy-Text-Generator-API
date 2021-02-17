@@ -12,16 +12,16 @@ const getAllParagraph = require("./controllers/index")
 const app = express()
 
 //middlewares  
-app.use(cors);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 dotenv.config()
 
 const dbUrl = process.env.DB_CONNECTION
-                                                                const connectionParams = {
-        useNewUrlParser: true,                                          useUnifiedTopology: true,
+                                                
+const connectionParams = {
+        useNewUrlParser: true,                       
+	useUnifiedTopology: true,
         useCreateIndex: true
 }
 
@@ -34,6 +34,10 @@ mongoose.connect(dbUrl, connectionParams)                               .then(()
 
 app.get("/", getAllParagraph)
 
+app.get("/api", (req,res) => {
+	res.json(data)
+})
+
 const savePara = async () => {
 	data.map(async (item) => {
 const para = await new Paragraph({paragraph: item});
@@ -42,11 +46,9 @@ para.save((err, saved) => {
 	else{
 		console.log('saved')
 	}});
-	console.log(para.paragraph)
 })};
 
-
-
+app.use(cors({origin:true,credentials: true}));
 
 const PORT = 5000 || process.env.PORT
 
