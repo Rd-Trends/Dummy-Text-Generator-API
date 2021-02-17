@@ -9,12 +9,13 @@ const getAllParagraph = async ( req, res, next ) => {
 			console.log(err)
 		}
 	} 
-	const paragraphNumber = req.query.paragraphNO
+	const queryNumber = req.query.paragraphNO
+	const paragraphNumber = parseInt(queryNumber)
 	try{
 	const paragraphs = await Paragraph.find().limit(paragraphNumber).lean()
 	res.json(paragraphs)
 	}catch(err){
-		console.err(err)
+		console.log(err)
 	}
 }
 
